@@ -4,9 +4,22 @@ const saltRounds = 10;
 
 const UserSchema = new mongoose.Schema({
   name: { type: String,  required: true, trim: true},
-  email: { type: String, unique: true,  required: true, trim: true},
-  age: {  type: Number,required: true},
-  phone: {  type: String, required: true, trim: true  },
+  email: {
+    type: String,
+    unique: true,
+    required: true,
+    trim: true,
+    match:  /\S+@\S+\.\S+/
+  },
+  age: {
+    type: Number,
+    required: true
+  },
+  phone: {
+    type: String, required: true, trim: true,
+    min : 100000000,
+    max : 999999999
+   },
   password: {  type: String, required: true},
   role: {type: Number, required: true}
 });
@@ -41,4 +54,4 @@ UserSchema.pre('save', function(next) {
   }
 });
 
-module.exports = mongoose.model('DoctorPatient', UserSchema);
+module.exports = mongoose.model('data', UserSchema);

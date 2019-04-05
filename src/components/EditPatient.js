@@ -8,7 +8,7 @@ import {isDoctor, isPatient, isLoggedIn} from './Helpers.js'
 class EditPatient extends Component{
   constructor(props){
     super(props);
-    this.state = {  _id:'',  name:'',  email:'', age:'', phone:'',  password: '' }
+    this.state = {  _id:'',  name:'',  email:'', age:'', phone:'' }
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -47,15 +47,23 @@ class EditPatient extends Component{
     axios.post(`http://localhost:5000/api/updateUser/`, {
       params: {  id: pID, data: newMeetup }
     }).then(response => {
+      if(response.status!==200) {
+          alert('Error updating in please try again');
+      }
+
+      console.log(response.data)
+
 
       this.setState({details: response.data}, () => {
         axios.get(`http://localhost:5000/api/findPatient/`, {
           params: {  id: pID }
         }).then(data => {
+          console.log(data.data)
           this.setState({details: data.data}, () => {
               axios.post(`http://localhost:5000/api/setToken`,
               data.data
             ).then(token => {
+              console.log(token.data)
               if(response.status===200) {
                 window.localStorage.setItem('token', token.data);
                 this.props.history.push('/profile');
@@ -63,12 +71,20 @@ class EditPatient extends Component{
 
             }).catch(err => {
               console.error(err);
-              alert('Error logging in please try again');
+              alert('Error updating in please try again');
             })
         })
       }).catch(err => console.log(err));
       })
-  }).catch(err => console.log(err));
+
+
+  }).catch(err => {console.log(err)
+    console.error(err);
+    alert('Error updating in please try again');
+  }
+
+  );
+
   }
 
   onSubmit(e){
@@ -97,7 +113,7 @@ class EditPatient extends Component{
 
 
   render(){
-  
+
 
 
     return (

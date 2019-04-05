@@ -40,6 +40,7 @@ const buildInput = [
     }
   }
 ];
+
 const testPatient={
   name: "Name",
   email: "patient@gmail.com",
@@ -57,15 +58,17 @@ const testDoct={
   phone: 9142316674,
   role: 1
 }
-// 
+//
+
+
 axios.post(`http://localhost:5000/api/register/`,testPatient)
 .catch(err => console.log(err));
+
 axios.post(`http://localhost:5000/api/register/`,testDoct)
 .catch(err => console.log(err));
 
 const numberOfResults = 20;
 const seededData = seeder.build(buildInput, numberOfResults);
-seededData.append()
 seededData.forEach(function(data) {
   axios.post(`http://localhost:5000/api/register/`,data)
   .catch(err => console.log(err));

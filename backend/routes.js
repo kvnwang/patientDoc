@@ -128,28 +128,20 @@ router.get('/findPatient/', function (req, res) {
 router.post('/updateUser', function (req, res) {
   var myquery = { _id: req.body.params['id']};
   var data=req.body.params.data
-  var userData= {"name" :data['name'], "email": data['email'], "age": data['age'], "phone": data['phone']}
+  if(isNaN(data.age) || isNaN(data.age) || data.age<0|| String(data.phone).length!=10) {
+    res.status(400).send(err)
+  }
+
+  var userData= {"name" :data.name, "email": data.email, "age": data.age, "phone": data.phone}
   var newvalues = { $set: userData};
   User.updateOne(myquery, newvalues).then((obj) => {
-    res.json(obj)
+    res.status(200).json(obj)
   }).catch((err) => {
     console.log('Error: ' + err);
-    res.send(err)
+    res.status(400).send(err)
   })
 });
 
 
-// finds one patient
-router.get('/deleteAll/', function (req, res) {
-  User.delete({}).then(user => {
-    if (user) {
-      res.json(user)
-    } else {
-      res.send("User does not exist")
-    }
-  }).catch(err => {
-    res.send('error: ' + err)
-  })
-});
 
 module.exports = router
