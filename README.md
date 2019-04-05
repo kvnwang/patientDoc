@@ -1,7 +1,10 @@
 
 ## Assumptions
 This small project implementation assumes:
-- users can only be a doctor or patient, if they are both they would have to create two seperate accounts
+- users can only be a doctor or patient, if they are both they would have to create two separate accounts
+- phone numbers are US 10 digit phone numbers - between 100000000 and 999999999
+- users can only update their accounts info: name, age ,email, phone
+- doctors can see all patients, patients can only view/edit their own account information
 
 
 ## Overview
